@@ -3,6 +3,10 @@
     padding: 0;
     box-sizing: border-box;
 }
+body,html {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+}
+
 .token.selector{
   color: black;
 }
@@ -14,15 +18,14 @@
 }
 #code-wrapper{
   padding: 16px;
-  height: 100vh;
+  height: 100%;
   display: flex;
 }
 #code{
   width: 100%;
-  overflow: hidden;
 }
 #paper{
-  padding: 16px;
+  padding: 1.5em;
   position: fixed; 
   width: 50%; 
   height: 100%; 

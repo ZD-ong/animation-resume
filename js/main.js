@@ -16,7 +16,7 @@ function writeCode(prefix, code, fn) {
             window.clearInterval(timer)
             fn && fn.call()
         }
-    }, 10)
+    }, 70)
 }
 
 function writeMarkdown(markdown, fn) {
@@ -24,7 +24,7 @@ function writeMarkdown(markdown, fn) {
     let n = 0
     let timer = setInterval(() => {
         n += 1
-        domPaper.innerHTML = markdown + code.substring(0, n)
+        domPaper.innerHTML = markdown.substring(0, n)
         //页面自动滚动
         domPaper.scrollTop = domPaper.scrollHeight
         //页面上字符全部写入完毕后结束计时器
@@ -32,7 +32,7 @@ function writeMarkdown(markdown, fn) {
             window.clearInterval(timer)
             fn && fn.call()
         }
-    }, 10)
+    }, 70)
 }
 
 var result = `/*
@@ -50,17 +50,13 @@ var result = `/*
 html{
     background: rgb(50,41,49);
     color: rgb(222,222,222);
-    min-height: 100vh;
 }
 
-/* 文字离边框太近了吧 */
+/* 文字离边框也太近了吧 */
 #code{
-    padding: 0.5em;
-    margin: 0.5em;
+    padding: 16px;
     border: 1px solid #fff;
     overflow: auto;
-    width: 100%;
-    height: 100%;
 }
 
 
@@ -70,24 +66,51 @@ html{
 .token.punctuation{ color: rgb(230,219,116); }
 .token.function{ color: rgb(102,217,233); }
 
+/* 加点 3D 效果 */
+#code-wrapper{
+    width: 50%;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    overflow: auto;
+    perspective: 1000px;
+}
+
+#code {
+    transition: none;
+    transform: rotateY(10deg) translateZ(-30px);
+}
 
 
 /* 现在正式开始 */
 /* 我需要一张白纸 */
-#code-wrapper{
-    width: 50%; left: 0; position: fixed; height: 100%;
+
+#paper {
+    right: 0;
+    top: 0;
 }
 #paper > .content {
+    color: black;
     display: block;
 }
-/* 于是我就可以在白纸上写字了，请看右边 */
+/* 于是我就可以在白纸上写简历了，请看右边 */
 `
-var result2 = `/* 接下来用一个优秀的库 marked.js
- * 把 Markdown 变成 HTML
+var result2 = `/* 看起来怪怪的。。。
+ * 对了，这是 Markdown格式的，来把它变成 HTML
+ * 需要用到一个优秀的库 marked.js
  */
 `
-var md = `# 自我介绍
-我叫 XXX
+var result3 = `/*
+ * OK，相对好些了
+ * 接下来仔给HTML一点样式
+ */
+
+`
+var result4 = `/*
+* 再来一个留言板
+*/`
+var md = `# 左冬
+
 1990 年 1 月出生
 XXX 学校毕业
 自学前端半年
@@ -116,12 +139,17 @@ XXX 学校毕业
 - 手机 xxxxxxx
 `
 
+
 writeCode('', result, () => {
     createPaper(() => {
-        console.log('paper有了')
-        writeCode(result, result2, () => {
-            writeMarkdown(md)
+        writeMarkdown(md, () => {
+            writeCode(result, result2, () => {
+                changeMarkdownToHtml(() => {
+
+                })
+            })
         })
+
     })
 })
 
@@ -132,5 +160,36 @@ function createPaper(fn) {
     content.className = 'content'
     paper.appendChild(content)
     document.body.appendChild(paper)
-    fn.call()
+    fn && fn.call()
 }
+function changeMarkdownToHtml(fn) {
+    var div = document.createElement('div')
+    div.className = 'html markdown-body'
+    div.innerHTML = marked(md)
+    let markdownContainer = document.querySelector('#paper > .content')
+    markdownContainer.replaceWith(div)
+    fn && fn.call()
+}
+function leaveMessage(){
+    var message = document.createElement('div')
+    message.id = 'message'
+
+    
+}
+
+var APP_ID = 'T1ov6Kbk0OaGztEMI7YkrCl5-gzGzoHsz';
+var APP_KEY = '5tBAjqMyIoCmodYNnjDtEdNc';
+
+AV.init({
+    appId: APP_ID,
+    appKey: APP_KEY
+});
+
+var query = new AV.Query('Message')
+query.find()
+.then(function(message){
+    message.map(function(item){
+        console.log(item)
+        return item.attributes
+    })
+})

@@ -16,7 +16,7 @@ function writeCode(prefix, code, fn) {
             window.clearInterval(timer)
             fn && fn.call()
         }
-    }, 70)
+    }, 0)
 }
 
 function writeMarkdown(markdown, fn) {
@@ -32,7 +32,7 @@ function writeMarkdown(markdown, fn) {
             window.clearInterval(timer)
             fn && fn.call()
         }
-    }, 70)
+    }, 0)
 }
 
 var result = `/*
@@ -55,7 +55,7 @@ html{
 /* 文字离边框也太近了吧 */
 #code{
     padding: 16px;
-    border: 1px solid #fff;
+    border: 1px solid rgb(255,255,255);
     overflow: auto;
 }
 
@@ -107,8 +107,21 @@ var result3 = `/*
 
 `
 var result4 = `/*
-* 再来一个留言板
-*/`
+* 谢谢收看:)
+* 有什么想说的，可以给我留言哦，最后再来个留言板
+*/
+#code-wrapper {
+    height: 60vh;
+}
+#message {
+    border: 1px solid rgb(255,255,255);
+    margin-left: 10px;
+    margin-top: 28px;
+    width: 48%;
+    height: 34vh;
+    padding: 16px;
+}
+`
 var md = `# 左冬
 
 1990 年 1 月出生
@@ -145,7 +158,9 @@ writeCode('', result, () => {
         writeMarkdown(md, () => {
             writeCode(result, result2, () => {
                 changeMarkdownToHtml(() => {
-
+                    writeCode(result+result2,result4,()=>{
+                        leaveMessage()
+                    })
                 })
             })
         })
@@ -171,8 +186,8 @@ function changeMarkdownToHtml(fn) {
     fn && fn.call()
 }
 function leaveMessage(){
-    var message = document.createElement('div')
-    message.id = 'message'
+    let message = document.querySelector('#message')
+    message.classList.remove('hide')
 
     
 }
@@ -186,10 +201,40 @@ AV.init({
 });
 
 var query = new AV.Query('Message')
-query.find()
-.then(function(message){
-    message.map(function(item){
-        console.log(item)
-        return item.attributes
+query.find().then(function(messages){
+    let array = messages.map((item)=>item.attributes)
+    console.log(array)
+    array.forEach((item)=>{
+        let li = document.createElement('li')
+        li.innerText = item.content
+        let messageList = document.querySelector('#messageList')
+        messageList.append(li)
     })
 })
+
+let myForm = document.querySelector('#postMessageForm')
+
+
+myForm.addEventListener('submit',function(e){
+    e.preventDefault()
+    let content = myForm.querySelector('input[name=content]').value
+    //Message 是对应的表名
+    var Message = AV.Object.extend('Message')
+    var message = new Message()
+    message.save({
+        'content': content
+    }).then(function(object){
+        console.log('存入成功')
+        console.log(object)
+    })
+})
+
+
+
+// var TestObject = AV.Object.extend('TestObject');
+// var testObject = new TestObject();
+// testObject.save({
+//     words: 'Hello World!'
+// }).then(function (object) {
+//     console.log(object)
+// })

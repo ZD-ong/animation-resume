@@ -3,6 +3,12 @@
     padding: 0;
     box-sizing: border-box;
 }
+ul,
+ol,
+li {
+    list-style: none;
+    text-decoration: none;
+}
 .hide {
   display: none;
 }
@@ -47,4 +53,37 @@
   height: 100%;
   padding: 16px;
   overflow: auto;
+}
+
+#messageList {
+    display: inline-block;
+    height: 65%;
+    width: 100%;
+    display: inline-block;
+    overflow: scroll;
+    margin: 10px 0;
+}
+#messageList > li {
+    padding-top: 6px;
+    border-bottom: 1px solid rgb(71,73,76);
+}
+#postMessageForm {
+    margin: 6px 0;
+}
+#postMessageForm input {
+    height: 22px;
+    padding-left: 6px;
+    margin-right: 20px;
+    color: #333;
+    outline:none;
+    background: #eee;
+    border: #eee;
+}
+#postMessageForm > button{
+    border: 1px solid #fff;
+    padding: 0 4px;
+    height: 22px;
+    color: #fff;
+    background-color: transparent;
+    outline:none;
 }

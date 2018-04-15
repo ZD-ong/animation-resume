@@ -16,7 +16,7 @@ function writeCode(prefix, code, fn) {
             window.clearInterval(timer)
             fn && fn.call()
         }
-    }, 0)
+    }, 30)
 }
 
 function writeMarkdown(markdown, fn) {
@@ -32,7 +32,7 @@ function writeMarkdown(markdown, fn) {
             window.clearInterval(timer)
             fn && fn.call()
         }
-    }, 0)
+    }, 30)
 }
 
 var result = `/*

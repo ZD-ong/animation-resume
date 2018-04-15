@@ -65,8 +65,14 @@ li {
     overflow: scroll;
     margin: 10px 0;
 }
+#message > h3 {
+  font-size: 16px;
+  font-weight: 300;
+}
 #messageList > li {
-    padding-top: 6px;
+    font-size: 14px;
+    padding-top: 16px;
+    font-weight: lighter;
     border-bottom: 1px solid rgb(71,73,76);
 }
 #postMessageForm {

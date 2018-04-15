@@ -108,16 +108,18 @@ var result3 = `/*
     padding: 16px;
 }
 #paper h2 {
+    font-size: 20px;
     display: inline-block;
     border-bottom: 1px solid rgb(139,71,38); 
-    margin: 8px 0;
-    font-weight: 300;
+    margin: 16px 0;
+    font-weight: 400;
 }
 #paper p {
     font-size: 14px;
 }
-#paper ol {
+#paper ol,#paper ul {
     text-decoration: none;
+    padding-left: 1em;
 }
 #paper ul > li, #paper ol > li {
     font-size: 14px;

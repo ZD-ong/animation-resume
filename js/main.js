@@ -102,7 +102,7 @@ var result2 = `/* 看起来怪怪的。。。
 `
 var result3 = `/*
  * OK，相对好些了
- * 接下来仔给HTML一点样式
+ * 接下来再给HTML一点样式
  */
 #paper {
     padding: 16px;

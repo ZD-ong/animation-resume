@@ -157,7 +157,7 @@ var md = `左冬
 * HTML5 & CSS3：☆☆☆☆☆
 * JavaScript：☆☆☆☆
 * jQuery：☆☆☆☆
-* Git：☆☆☆☆☆
+* Git：☆☆☆☆
 * Vue：☆☆☆
 * HTTP：☆☆☆☆
 
